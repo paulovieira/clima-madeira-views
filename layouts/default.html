@@ -1,0 +1,79 @@
+
+
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+
+    {% block meta %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+
+
+    <title>
+        {# default title - to be overriden in each page #}
+        {% block title %}{{ ctx.texts[15][lang] }}{% endblock %}
+    </title>
+
+    {# common css (included in all pages) #}
+    {% include "common/common_stylesheets.html" %}
+
+    {# common css (included in all pages, but only after authentication and authorization) #}
+    {% if ctx.auth.isAuthenticated and ctx.auth.credentials.canEditTexts %}
+    {% include "common/summernote_stylesheets.html" %}
+    {% endif %}
+
+    {# custom css (specific for each page - to be overriden in that page) #}
+    {% block css %}{% endblock %}
+
+</head>
+
+<body class="">
+
+    {# top navbar #}
+{# TO BE DELETED
+    {% block navigation %}{% endblock %} 
+#}
+
+    {# main container #}
+	<div class="container-fluid">
+        {% block content %}{% endblock %}
+	</div>
+
+    {# sticky footer #}
+{#
+    <footer class="footer">
+        {% include "common/footer.html" %}
+    </footer>
+#}
+
+
+
+    {# templates that extends from layouts/default.html must call super() in order to include the common scripts #}    
+
+    {% block scripts %}
+
+    {# common javascript (included in all pages) #}
+    {% include "common/common_scripts.html" %} 
+
+    {# js for summernote editor (included in all pages, but only after authentication and authorization) #}
+
+    {% if ctx.auth.isAuthenticated and ctx.auth.credentials.canEditTexts and ctx.urlParam1 != "dashboard"  %}
+
+    {% include "common/summernote_scripts.html" %}
+    <script type="text/javascript">
+        window.Clima.editableTexts = {{ ctx.editableTexts | stringify }};  
+    </script>
+
+    {% endif %}
+
+
+    {% endblock %}
+    
+
+
+</body>
+
+</html>

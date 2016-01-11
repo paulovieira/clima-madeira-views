@@ -1,0 +1,32 @@
+{% extends "layouts/general-page.html"          %}
+
+{% block title %}{{ ctx.texts[15][lang] }} - {{ ctx.texts[530][lang] }}{% endblock %} 
+
+
+
+
+{% block mainColumnContent %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li><a href="/{{ lang}}">Home</a>
+            </li>
+            <li class="active">{{ ctx.texts[530][lang] }}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+
+        <h1 class="is-editable" data-editable-id="editable-1">
+            {{ ctx.editableTexts['editable-1'][lang] | lorem(ctx.texts[530][lang]) }}
+        </h1>
+        <div class="is-editable" data-editable-id="editable-2">{{ ctx.editableTexts['editable-2'][lang] | lorem('big') }}</div>
+    </div>
+</div>
+
+
+{% endblock %} 
+

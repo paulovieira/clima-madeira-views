@@ -1,0 +1,161 @@
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>A simple map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='http://clima.dev/static/leaflet/mapbox-2.2.1/mapbox.uncompressed.css' rel='stylesheet' />
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id='map' class="dark"></div>
+    <script src='http://clima.dev/static/leaflet/mapbox-2.2.1/mapbox.uncompressed.js'></script>
+    <script>
+
+    // 1. basic example (no mapbox.js)
+    // var map = L.map('map', {
+    //     zoom: 6,
+    //     center: [38.75, -9.15],
+    // });
+    // var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png')
+    // map.addLayer(osmLayer);    
+
+
+    //Clima.publicUri = "http://clima.dev"
+    L.mapbox.config.HTTP_URL = "http://clima.dev/api/v1/maps";
+    L.mapbox.accessToken = 'dummyAccessToken';
+
+    // make sure we aren't using retina tiles (this option is detected in chrome sometimes, on a regular laptop)
+    L.Browser.retina = false;
+    var map = L.mapbox.map('map', null, {
+        zoom: 8,
+        center: [32.7203,-16.8393],
+    });
+
+
+
+    // var Clima = {};
+    // Clima.tilesBaseUrl = "/api/v1/tiles/";
+
+    // var layer = L.tileLayer(Clima.tilesBaseUrl + 'new-map-2/{z}/{x}/{y}.png');
+    // layer.addTo(map);
+
+    //var map = L.mapbox.map("map", "new-map-3");
+    //var map2 = L.map("map");
+
+
+    
+    var layerCache = {};
+//    var mapId = "advanced-techniques-3-patterns-in-polygons";
+//    var mapId = "q53";
+
+
+
+    var loadMap = function(mapId){
+
+        // if the cache already has the layer, use it from the cache
+        // if the map already has the layer, do nothing (this shouldn't happen)
+        // add the layer to the map
+
+
+        layerCache[mapId] = layerCache[mapId] || {};
+
+        layerCache[mapId].tiles = L.mapbox.tileLayer(mapId);
+        layerCache[mapId].tiles.on("ready", function(){
+
+            //console.log(this.getTileJSON());
+
+            map.addLayer(layerCache[mapId].tiles);
+            map.legendControl.addLegend(this.getTileJSON().legend);
+
+        });
+        layerCache[mapId].tiles.on("error", function(err){
+
+            console.log("err message: ", err.error.responseText);
+        });
+
+        layerCache[mapId].grids = L.mapbox.gridLayer(mapId);
+        layerCache[mapId].grids.on("ready", function(){
+
+            map.addLayer(layerCache[mapId].grids);
+
+            layerCache[mapId].gridControl = L.mapbox.gridControl(layerCache[mapId].grids);
+            map.addControl(layerCache[mapId].gridControl);
+        });
+        layerCache[mapId].grids.on("error", function(err){
+
+            console.log("err message: ", err.error.responseText);
+        });
+
+    };
+
+
+
+
+
+    /*
+*/
+/*
+
+    var tileLayer4 = L.mapbox.tileLayer('new-map-4');
+    tileLayer4.on("ready", function(){
+        console.log(this.getTileJSON());
+        map.addLayer(tileLayer4);
+        map.legendControl.addLegend(this.getTileJSON().legend);
+    });
+    tileLayer4.on("error", function(err){
+        console.log("err message: ", err.error.responseText);
+    });
+
+    var gridLayer4 = L.mapbox.gridLayer('new-map-4');
+    map.addLayer(gridLayer4);
+
+    var gridControl4 = L.mapbox.gridControl(gridLayer4);
+    map.addControl(gridControl4);
+*/
+/*
+*/
+
+    /*
+    // var gridLayer = L.mapbox.gridLayer('new-map-2');
+    // var gridControl = L.mapbox.gridControl(gridLayer, {
+
+    });
+
+
+    // map.addLayer(gridLayer);
+    // map.addControl(gridControl);
+    //map.addControl(L.mapbox.legendControl());
+    
+    //map.legendControl.addLegend(tileLayer.getTileJSON().legend)
+*/
+/*
+    L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG92aWVpcmEiLCJhIjoiZzQ0LTVsWSJ9.INl3yoH_OrMrS2BxORgSbw';
+    var map = L.mapbox.map('map').setView([37, -80], 3);
+
+    // The visible tile layer
+    L.mapbox.tileLayer('examples.map-8ced9urs').addTo(map);
+
+    // Load interactivity data into the map with a gridLayer
+    var myGridLayer = L.mapbox.gridLayer('examples.map-8ced9urs').addTo(map);
+    var myGridControl = L.mapbox.gridControl(myGridLayer).addTo(map);
+*/
+//    map.addLayer(osmLayer);
+
+    </script>
+</body>
+
+</html>

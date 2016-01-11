@@ -1,0 +1,18 @@
+{# NODE_ENV is a nunjucks global variable (it has be set explicitely) #}
+
+{% if NODE_ENV == "production" %}
+
+<script src="/static/_js/{{ bundles.summernote }}"></script> 
+
+{% else %}
+
+<script src="/static/underscore/underscore-1.6.0.js"></script>
+<script src="/static/q/q-1.1.2.js"></script>
+<script src="/static/bootstrap/bootstrap-notify-51a18c.js"></script>
+<script src="/static/jquery/jquery-livequery-70a306.js"></script>
+
+<script src="/static/summernote/0.6.16/summernote.js"></script>
+<script src="/summernote-app/summernote-save.js"></script> 
+
+
+{% endif %}

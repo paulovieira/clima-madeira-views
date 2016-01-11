@@ -1,0 +1,28 @@
+{# NOTE: NODE_ENV is a nunjucks global variable (it has be set explicitely) #}
+
+
+{% if NODE_ENV == "production" %}
+
+{# in production mode, jquery and bootstrap are in the base bundle  #}
+<script src="/static/_js/{{ bundles.base }}"></script> 
+
+{% else %}
+
+<script src="/static/jquery/jquery-1.11.2.js"></script>
+<script src="/static/bootstrap/3.3.5-original/js/bootstrap.js"></script>
+
+{% endif %}
+
+<script type="text/javascript">
+
+window.Clima = window.Clima || {};
+Clima.lang = "{{ lang }}";
+Clima.urlParam1 = "{{ ctx.urlParam1 | default('ERROR - urlParam1 is missing') }}";
+Clima.userId = {{ ctx.auth.credentials.id | default(-1) }};
+Clima.isAdmin = {{ ctx.auth.credentials.isAdmin | default(false) }};
+Clima.publicUri = "http://{{ publicUri }}";
+Clima.publicPort = {{ publicPort }};
+Clima.showEnglish = {{ ctx.showEnglish }};
+
+</script>
+<script src="/static/_js/main.js"></script>

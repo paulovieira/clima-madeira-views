@@ -1,0 +1,217 @@
+{% macro navigation(ctx) %}
+
+	<nav class="navbar navbar-default">
+
+
+	    <div class="container-fluid">
+	        <!-- Brand and toggle get grouped for better mobile display -->
+	        <div class="navbar-header">
+	            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-bar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="/{{ lang }}" style="padding-left: 30px; padding-right: 30px;">
+	            	{{ ctx.texts[0]["pt"] }}
+	            </a>
+	        </div>
+
+	        <!-- Collect the nav links, forms, and other content for toggling -->
+	        <div class="collapse navbar-collapse" id="top-bar">
+	            <ul class="nav navbar-nav">
+
+                    <li class="nav-border-left {{ 'active' if ctx.urlParam1=='enquadramento' }}">
+                    	<a href="/{{ lang }}/enquadramento">{{ ctx.texts[17][lang] }}</a>
+                    </li>
+
+					{# dropdown for the sectors #}
+	                <li class="dropdown {% if ctx.urlParam1=='sectores' %}active{% endif %} nav-border-left">
+	                    <a href="/{{ lang }}/sectores" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ctx.texts[23][lang] }} <span class="caret"></span></a>
+
+	                    <ul class="dropdown-menu" role="menu">
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='clima' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/clima">{{ ctx.texts[526][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='agricultura' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/agricultura">{{ ctx.texts[49][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='florestas' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/florestas">{{ ctx.texts[50][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='biodiversidade' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/biodiversidade">{{ ctx.texts[508][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='energia' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/energia">{{ ctx.texts[517][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='recursos-hidricos' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/recursos-hidricos">{{ ctx.texts[529][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='riscos-hidrogeomorfologicos' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/riscos-hidrogeomorfologicos">{{ ctx.texts[520][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='saude-humana' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/saude-humana">{{ ctx.texts[511][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='turismo' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/turismo">{{ ctx.texts[514][lang] }}</a>
+	                        </li>
+
+	                        <li class="{% if ctx.urlParam1=='sectores' and ctx.urlParam2=='adaptacao' %}active{% endif %}">
+	                        	<a href="/{{ lang }}/sectores/adaptacao">{{ ctx.texts[523][lang] }}</a>
+	                        </li>
+
+
+	                    </ul>
+
+	                </li>
+
+	                <li class="nav-border-left {{ 'active' if ctx.urlParam1=='cartografia' }}">
+	                	<a href="/{{ lang }}/cartografia">{{ ctx.texts[19][lang] }}</a>
+	                </li>
+
+	                <li class="nav-border-left {{ 'active' if ctx.urlParam1=='estrategia-adaptacao' }}">
+	                	<a href="/{{ lang }}/estrategia-adaptacao">{{ ctx.texts[20][lang] }}</a>
+	                </li>
+
+	                <li class="nav-border-left {{ 'active' if ctx.urlParam1=='indicadores' }}">
+	                	<a href="/{{ lang }}/indicadores">{{ ctx.texts[530][lang] }}</a>
+	                </li>
+
+	                <li class="nav-border-left nav-border-right {{ 'active' if ctx.urlParam1=='equipa' }}">
+	                	<a href="/{{ lang }}/equipa">{{ ctx.texts[21][lang] }}</a>
+	                </li>
+
+{# todo add indicadores #}
+	            </ul>
+
+{#
+	            <form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="{{ ctx.texts[5][lang] }}">
+							<span class="input-group-addon search-box"><span class="glyphicon glyphicon-search"></span></span>
+						</div>
+	            </form>
+#}
+
+
+				{# 
+				NOTE: the flag button is always shown; as for the other buttons, 2 situations can happen:
+				a) if the user is logged in, 2 buttons are shown: "go to dashboard" and "logout" (except in the dashboard page itself, 
+				where only the "logout" button is shown); 
+				b) if not, only 1 button is shown: "login"
+
+				Below we set the correct button id and icon class. The id is used to attach the click handler, which will then redirect the 
+				the browser to the correct url. This is necessary because we can't use <a class='btn'> in the navbar. More details here:
+				http://getbootstrap.com/css/#buttons
+				#}
+
+            	{% if ctx.auth.isAuthenticated %}
+
+            		{% set dashboard_btn_id = "js-dashboard-nav" %} 
+            		{% set dashboard_btn_icon_class = "glyphicon-cog" %} 
+
+            		{% set logout_btn_id = "js-logout-nav" %} 
+            		{% set logout_btn_icon_class = "glyphicon-log-out" %} 
+
+            	{% else %}
+
+            		{% set login_btn_id = "js-login-nav" %} 
+            		{% set login_btn_icon_class = "glyphicon-user" %} 
+
+            	{% endif %}
+
+
+				{# set the correct icon class for the button relative to the language (flag) #}
+            	{% if lang == "pt" %}
+            		{% set language_icon_class = "flag-icon-pt"    %} 
+            	{% else %}
+            		{% set language_icon_class = "flag-icon-gb"    %} 
+            	{% endif %}
+
+
+	            <ul class="nav navbar-nav navbar-right">
+	
+		            <li style="margin-left: 15px;">
+
+						{# contact button #}
+		            	<button id="js-contact-nav" style="padding-left: 18px; padding-right: 18px;" type="button" class="btn btn-default navbar-btn" data-toggle="tooltip" data-placement="bottom" title="Contacto (clique para enviar um email para drota.sra@gov-madeira.pt)">
+		            		<i class="fa fa-at" style="font-size: 120%;"></i>
+		            	</button>
+
+		            	{% if ctx.auth.isAuthenticated %}
+
+		            		{% if ctx.urlParam1 != "dashboard" %}
+
+							{# dashboard button  - shown when the user is authenticated in and the page is not the dashboard #}
+			            	<button style="margin-left: 4px; padding-left: 18px; padding-right: 18px;" type="button" class="btn btn-default navbar-btn" id="{{ dashboard_btn_id }}" data-toggle="tooltip" data-placement="bottom" title="{{ ctx.texts[82][lang] }}">
+			            		<span class="glyphicon {{ dashboard_btn_icon_class }}"></span> 
+			            	</button>
+
+			            	{% endif %}
+
+							{# logout button  - shown when the user is authenticated  #}
+			            	<button style="margin-left: 4px; padding-left: 18px; padding-right: 18px;" type="button" class="btn btn-default navbar-btn" id="{{ logout_btn_id }}" data-toggle="tooltip" data-placement="bottom" title="{{ ctx.texts[79][lang] }}">
+			            		<span class="glyphicon {{ logout_btn_icon_class }}"></span> 
+			            	</button>
+
+		            	{% else %}
+
+							{% if ctx.urlParam1 != "login" %}
+
+							{# login button - shown when the user is not authenticated  #}
+			            	<button style="margin-left: 4px; padding-left: 18px; padding-right: 18px;" type="button" class="btn btn-default navbar-btn" id="{{ login_btn_id }}" data-toggle="tooltip" data-placement="bottom" title="{{ ctx.texts[81][lang] }}">
+			            		<span class="glyphicon {{ login_btn_icon_class }}"></span> 
+			            	</button>
+
+			            	{% endif %}
+
+			           	{% endif %}
+
+
+{#  - removed the button to change languges; uncomment this part to activate it (must also be done in includes/header-home.html)
+#}
+						{% if ctx.showEnglish %}
+						<div class="btn-group">
+						    <button style="margin-left: 5px; " type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
+						        <span class="flag-icon {{ language_icon_class }}"></span>&nbsp;&nbsp;<span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu" role="menu" style="min-width: 0">
+						        <li>
+						        	<a style="padding: 3px 15px;" href="/pt{{ ctx.urlWithoutLang }}">Português <span class="flag-icon flag-icon-pt"></span></a>
+						        </li>
+						        <li>
+						        	<a style="padding: 3px 15px;" href="/en{{ ctx.urlWithoutLang }}">Inglês <span class="flag-icon flag-icon-gb"></span></a>
+						        </li>
+						    </ul>
+						</div>
+						{% endif %}
+
+
+
+
+
+
+		            </li>
+
+
+	            </ul>
+
+           
+	        </div>
+	        <!-- /.navbar-collapse -->
+	    </div>
+	    <!-- /.container-fluid -->
+	</nav>
+
+{% endmacro %}

@@ -1,0 +1,146 @@
+{% extends "layouts/general-page.html"          %}
+
+{% from "sectores/macros/sector-heading.html" import sectorHeading %} 
+
+{% set sectorData = {
+    sectorName: "energia", 
+    title: 517,
+    introParagraph: 518,
+    restOfParagraph: 519
+    } 
+%}
+
+{% block title %}{{ ctx.texts[15][lang] }} - {{ ctx.texts[53][lang] }}{% endblock %} 
+
+
+{% block mainColumnContent %}
+
+<div class="row">
+
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li><a href="/{{ lang}}">Home</a>
+            </li>
+            <li>{{ ctx.texts[23][lang] }}
+            </li>
+            <li class="active">{{ ctx.texts[517][lang] }}</li>
+        </ol>
+    </div>
+</div>
+
+
+{{ sectorHeading(ctx, sectorData) }}
+
+
+<hr>
+
+
+<div class="row">
+
+
+    <div class="col-sm-4">
+
+        <h3>{{ ctx.texts[108][lang] }}</h3>
+
+        <div class="is-editable" data-editable-id="editable-2">
+        {% if ctx.editableTexts['editable-2'][lang] %}
+
+          {{ ctx.editableTexts['editable-2'][lang] }} 
+
+        {% else %}
+
+        <dl>
+          <dt><span class="glyphicon glyphicon-chevron-right"></span>Lorem ipsum 1</dt>
+          <dd style="margin-bottom: 10px;">Dolor odit debitis vel voluptatem, consectetur suscipit recusandae, culpa explicabo ipsam exercitationem.</dd>
+
+          <dt><span class="glyphicon glyphicon-chevron-right"></span>Lorem ipsum 2</dt>
+          <dd style="margin-bottom: 10px;">Dolor odit debitis vel voluptatem, consectetur suscipit recusandae, culpa explicabo ipsam exercitationem.</dd>
+
+          <dt><span class="glyphicon glyphicon-chevron-right"></span>Lorem ipsum 3</dt>
+          <dd style="margin-bottom: 10px;">Dolor odit debitis vel voluptatem, consectetur suscipit recusandae, culpa explicabo ipsam exercitationem.</dd>
+
+          <dt><span class="glyphicon glyphicon-chevron-right"></span>Lorem ipsum 4</dt>
+          <dd style="margin-bottom: 10px;">Dolor odit debitis vel voluptatem, consectetur suscipit recusandae, culpa explicabo ipsam exercitationem.</dd>
+        </dl>
+
+        {% endif %}
+        </div>
+
+    </div>
+
+    <div class="col-sm-4">
+
+        <h3>{{ ctx.texts[109][lang] }}</h3>
+
+
+        <div class="is-editable" data-editable-id="editable-3">
+        {% if ctx.editableTexts['editable-3'][lang] %}
+
+          {{ ctx.editableTexts['editable-3'][lang] }} 
+
+        {% else %}
+
+        <ul>
+            <li>
+              lorem ipsum 1
+            </li>
+            <li>
+              lorem ipsum 2
+            </li>
+            <li>
+              lorem ipsum 3
+            </li>
+            <li>
+              lorem ipsum 4
+            </li>
+        </ul>
+        
+        {% endif %}
+        </div>
+
+    </div>
+
+    <div class="col-sm-4">
+
+        <h3>{{ ctx.texts[107][lang] }}</h3>
+
+        <div class="is-editable" data-editable-id="editable-1">
+        {% if ctx.editableTexts['editable-1'][lang] %}
+
+          {{ ctx.editableTexts['editable-1'][lang] }} 
+
+        {% else %}
+
+        <ul>
+            <li>
+              lorem ipsum 1
+            </li>
+            <li>
+              lorem ipsum 2
+            </li>
+            <li>
+              lorem ipsum 3
+            </li>
+            <li>
+              lorem ipsum 4
+            </li>
+        </ul>
+
+        {% endif %}
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+{% endblock %} 
+
+

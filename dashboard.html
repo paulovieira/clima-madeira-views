@@ -1,0 +1,104 @@
+{% extends "layouts/general-page.html"          %}
+
+{% from "macros/navigation.html" import navigation %}
+
+
+{% block title %}{{ ctx.texts[15][lang] }} - {{ ctx.texts[103][lang] }}{% endblock %} 
+
+{% block css %}
+    <link href="/static/bootstrap/bootstrap-modal-2.2.5.css" rel="stylesheet" />
+    <link href="/static/bootstrap/bootstrap-fileinput-4.2.0.css" rel="stylesheet" />
+    <link href="/static/bootstrap-colorpicker/2.2.0/css/bootstrap-colorpicker.css" rel="stylesheet" />
+    <link href="/static/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/static/prism/prism.css" rel="stylesheet" />
+    <link href="/dashboard/_css/dashboard.css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block mainColumnContent %}
+
+    <div id="main-region">
+    </div>
+
+{#
+    <div class="modal xfade" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-content-region">
+
+
+            </div>
+        </div>
+    </div>
+#}
+
+    <div id="modal-1" class="modal xfade" style="display: none;" data-width="700px">
+        <div id="modal1-content-region">
+        </div>
+    </div>
+
+    <div id="modal-2" class="modal xfade" style="display: none;" data-width="600px">
+        <div id="modal2-content-region">
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{# NOTE: common javascript (loaded in all pages): jquery, bootstrap, underscore, q #}
+
+    {{ super() }}
+
+    <script src="/static/_js/{{ bundles['dashboard-templates'] }}"></script>
+
+    {% if NODE_ENV == "production" %}
+
+    <script src="/static/_js/{{ bundles['dashboard-libs'] }}"></script>
+    <script src="/static/_js/{{ bundles['dashboard-app'] }}"></script>
+
+    {% else %}
+
+    {# dashboard libs #}
+    {# NOTE: if we add new files here, we must add in the gruntfile as well #}
+    <script src="/static/underscore/underscore-1.6.0.js"></script>
+    <script src="/static/underscore/underscore.string-3.0.3.js"></script>
+    <script src="/static/q/q-1.1.2.js"></script>
+    <script src="/static/bootstrap/bootstrap-fileinput-4.2.0.js"></script>
+    <script src="/static/bootstrap-colorpicker/2.2.0/js/bootstrap-colorpicker.js"></script>
+    <script src="/static/bootstrap/bootstrap-notify-51a18c.js"></script>
+    <script src="/static/bootstrap/bootstrap-modal-2.2.5.js"></script>    
+    <script src="/static/jquery/jquery-sortable-0.9.13.js"></script>
+    <script src="/static/fecha/fecha-1.0.0.js"></script>
+    <script src="/static/nunjucks/nunjucks-slim-1.3.3.js"></script>
+    <script src="/static/chroma/chroma-1.0.1.js"></script>
+    <script src="/static/prism/prism.js"></script>
+    <script src="/static/backbone/json2.js"></script>
+    <script src="/static/backbone/backbone-1.1.2.js"></script>
+    <script src="/static/backbone/backbone.radio-1.0.1.js"></script>
+    <script src="/static/backbone/backbone.attributes-5b0f73.js"></script>
+    <script src="/static/backbone/backbone.syphon-0.6.2.js"></script>
+    <script src="/static/backbone/backbone.marionette-2.4.1.js"></script>
+    <script src="/static/backbone/renderer-nunjucks.js"></script>
+
+
+    {# dashboard app #}
+    {# NOTE: if we add new files here, we must add in the gruntfile as well #}
+    <script src="/dashboard/entities.js"></script>
+    <script src="/dashboard/behaviors.js"></script>
+    <script src="/dashboard/profile/profile.js"></script>
+    <script src="/dashboard/texts/texts.js"></script>
+    <script src="/dashboard/users/users.js"></script>
+    <script src="/dashboard/indicators/indicators.js"></script>
+    <script src="/dashboard/files/files.js"></script>
+    <script src="/dashboard/maps/maps.js"></script>
+    <script src="/dashboard/color-brew.js"></script>    
+    <script src="/dashboard/menu-left/menu-left.js"></script>
+    <script src="/dashboard/main-layout/main-layout.js"></script>
+    <script src="/dashboard/index.js"></script>
+
+
+    {% endif %}
+
+
+{% endblock %}
