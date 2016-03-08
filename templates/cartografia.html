@@ -58,6 +58,10 @@
     <script>
         Clima.maps = {{ ctx.maps | stringify }};
         Clima.mapsMenu = {{ ctx.mapsMenu | stringify }};
+        Clima.center = {{ ctx.center | stringify }};
+        Clima.zoom = {{ ctx.zoom | stringify }};
+        Clima.maxZoom = {{ ctx.maxZoom | stringify }};
+        Clima.minZoom = {{ ctx.minZoom | stringify }};
     </script>
 
     {% if NODE_ENV == "production" %}
